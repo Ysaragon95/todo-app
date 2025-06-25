@@ -6,7 +6,7 @@
       class="login-auth-form"
     >
       <div class="form-group">
-        <label for="email">Dirección de correo o nombre de usuario</label>
+        <label for="email">Dirección de correo</label>
         <input
           formControlName="email"
           type="text"
@@ -31,7 +31,7 @@
       }
 
       <div class="form-action">
-        <button [disabled]="formLogin.invalid" class="login social-btn">
+        <button [disabled]="formLogin.invalid" class="btn btn-sm btn-primary">
           Iniciar sesión
         </button>
       </div>
