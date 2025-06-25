@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
+import { CardStatusComponent } from "../../../todo/components/card-status-component/card-status-component";
 
 @Component({
   selector: 'app-todos-page',
-  imports: [],
+  imports: [CardStatusComponent],
   templateUrl: './todos-page.html',
-  styleUrl: './todos-page.css'
 })
 export class TodosPage {
 
