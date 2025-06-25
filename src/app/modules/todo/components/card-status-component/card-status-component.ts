@@ -12,6 +12,7 @@ import {
 import { TodoService } from '../../services/todo-service';
 import { ItemTodoComponent } from '../item-todo-component/item-todo-component';
 import { CommonModule } from '@angular/common';
+import Toastify from 'toastify-js';
 
 @Component({
   selector: 'app-card-status-component',
@@ -31,16 +32,12 @@ export class CardStatusComponent implements OnInit {
   completadas: AllTodoQueryResponse[] = [];
   canceladas: AllTodoQueryResponse[] = [];
 
-  // --- AÑADE ESTA PROPIEDAD AQUÍ ---
-  // Define un array con los IDs de todos tus cdkDropList
-  // Esto hace que todas las listas estén conectadas entre sí
   connectedTo: string[] = [
     'pendientesList',
     'enProgresoList',
     'completadasList',
     'canceladasList',
   ];
-  // ----------------------------------
 
   constructor(private todoService: TodoService) {}
 
@@ -74,14 +71,12 @@ export class CardStatusComponent implements OnInit {
 
   drop(event: CdkDragDrop<AllTodoQueryResponse[]>) {
     if (event.previousContainer === event.container) {
-      // Lógica para reordenar dentro de la misma lista
       moveItemInArray(
         event.container.data,
         event.previousIndex,
         event.currentIndex
       );
     } else {
-      // Lógica para mover entre listas diferentes
       transferArrayItem(
         event.previousContainer.data,
         event.container.data,
@@ -106,13 +101,19 @@ export class CardStatusComponent implements OnInit {
           newStatus = EnumStateTodo.Cancelled;
           break;
         default:
-          return; // No hacer nada si el ID del contenedor no coincide
+          Toastify({
+            text: 'Estado de lista desconocido. No se pudo actualizar la tarea.',
+            duration: 3000,
+            close: true,
+            gravity: 'top',
+            position: 'right',
+            backgroundColor: 'linear-gradient(to right, #ff5f6d, #ffc371)',
+          }).showToast();
+          return;
       }
 
-      // Actualiza el estado de la tarea en tu modelo de datos
-      movedTask.status = newStatus;;
+      movedTask.status = newStatus;
 
-      // Llama al servicio para persistir el cambio
       this.todoService
         .updateTodo({
           idTodo: movedTask.id,
@@ -125,21 +126,35 @@ export class CardStatusComponent implements OnInit {
         .subscribe({
           next: (response) => {
             if (response.success) {
-              console.log('Tarea actualizada con éxito:', response.message);
-              // Podrías considerar un Toast/Snackbar en lugar de alert
+              Toastify({
+                text: response.message,
+                duration: 3000,
+                close: true,
+                gravity: 'top',
+                position: 'right',
+                backgroundColor: 'linear-gradient(to right, #00b09b, #96c93d)',
+              }).showToast();
             } else {
-              console.warn(
-                'Advertencia al actualizar tarea:',
-                response.message
-              );
+              Toastify({
+                text: response.message,
+                duration: 3000,
+                close: true,
+                gravity: 'top',
+                position: 'right',
+                backgroundColor: 'linear-gradient(to right, #ffc371, #f7b731)',
+              }).showToast();
             }
           },
           error: (err) => {
-            console.error('Error al actualizar la tarea:', err);
-            // Si la actualización falla, es buena práctica revertir el movimiento en el UI
-            // o recargar los datos para asegurar la consistencia.
+            Toastify({
+              text: 'Error al actualizar la tarea. Revertiendo cambios.',
+              duration: 4000, // Un poco más largo para errores
+              close: true,
+              gravity: 'top',
+              position: 'right',
+              backgroundColor: 'linear-gradient(to right, #ff5f6d, #ffc371)',
+            }).showToast();
             this.loadTodos(this.currentUserId);
-            alert('Error al actualizar la tarea. Revertiendo cambios.');
           },
         });
     }
