@@ -32,7 +32,7 @@ export class AuthService {
         tap((response) => {
           if (response && response.data) {
             localStorage.setItem('userName', response.data.userName);
-            this.cookieService.set('token', response.data.token, 4, '/');
+            this.cookieService.set('token', response.data.token, { expires: 4, path: '/' });
           }
         })
       );
