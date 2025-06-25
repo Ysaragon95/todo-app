@@ -4,7 +4,9 @@
   height: 100vh;
   display: flex;
   color: #000;
-  background-color: #9b9292;
+  background: #485563;
+  background: -webkit-linear-gradient(to right, #485563, #29323c);
+  background: linear-gradient(to right, #485563, #29323c);
   justify-content: center;
   flex-direction: column;
   align-items: center;
@@ -18,6 +20,11 @@
   flex-direction: column;
   align-items: center;
   padding: 50px;
+  background: rgba(255, 255, 255, 0.35);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
 }
 
 .login-auth-page .login-auth-form {
@@ -39,6 +46,8 @@
   height: 30px;
   padding: 0.25rem 0.5rem;
   font-size: 90%;
+  background-color: #fff;
+  color: #000;
 }
 
 .login-auth-page .login-auth-form label {
