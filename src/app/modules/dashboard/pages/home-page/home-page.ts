@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
 import { trigger, transition, style, animate } from '@angular/animations';
+import { RouterOutlet } from '@angular/router';
+import { SidebarComponent } from "../../../../shared/components/sidebar-component/sidebar-component";
 
 @Component({
   selector: 'app-home-page',
-  imports: [],
+  imports: [RouterOutlet, SidebarComponent],
   templateUrl: './home-page.html',
   animations: [
     trigger('fadeIn', [

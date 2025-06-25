@@ -1,9 +1,11 @@
-import { ResponseBase } from './../../../core/models/common/response-base-model';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '@environments/environment';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { LoginResponse } from '@models/security/login-model';
+import { ResponseBase } from '@models/common/response-base-model';
+import { CookieService } from 'ngx-cookie-service';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -11,18 +13,34 @@ import { LoginResponse } from '@models/security/login-model';
 export class AuthService {
   private readonly URL = environment.apiUrlBase;
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private cookieService: CookieService,
+    private router: Router
+  ) {}
 
   sendCredentials(
     email: string,
     password: string
   ): Observable<ResponseBase<LoginResponse>> {
-    return this.http.post<ResponseBase<LoginResponse>>(
-      `${this.URL}/Security/login`,
-      {
+    return this.http
+      .post<ResponseBase<LoginResponse>>(`${this.URL}/Security/login`, {
         email,
         password,
-      }
-    );
+      })
+      .pipe(
+        tap((response) => {
+          if (response && response.data) {
+            localStorage.setItem('userName', response.data.userName);
+            this.cookieService.set('token', response.data.token, 4, '/');
+          }
+        })
+      );
+  }
+
+  logout(): void {
+    this.cookieService.delete('token', '/');
+    localStorage.removeItem('userName');
+    this.router.navigate(['/auth/login']);
   }
 }

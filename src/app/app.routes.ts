@@ -18,6 +18,26 @@ export const routes: Routes = [
       import('./modules/dashboard/pages/home-page/home-page').then(
         (m) => m.HomePage
       ),
+    children: [
+      {
+        path: 'home',
+        loadComponent: () =>
+          import('./modules/dashboard/pages/home-page/home-page').then(
+            (c) => c.HomePage
+          ),
+      },
+      {
+        path: 'todos',
+        loadComponent: () =>
+          import('./modules/dashboard/pages/todos-page/todos-page').then(
+            (c) => c.TodosPage
+          ),
+      },
+      {
+        path: '**',
+        redirectTo: 'trending',
+      },
+    ],
   },
   {
     path: '',
