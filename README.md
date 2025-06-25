@@ -1,59 +1,53 @@
-# TodoApp
+# Prueba Técnica - Frontend Angular
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.0.3.
+Este repositorio contiene la aplicación frontend "To-Do List" desarrollada con Angular (versión 20). La aplicación permite la gestión de tareas, incluyendo inicio de sesión, creación, edición, eliminación, marcado de estado y visualización de métricas.
 
-## Development server
+## Decisiones Técnicas Tomadas 
 
-To start a local development server, run:
+* **Framework**: Angular (v20) CLI para el bootstrapping del proyecto.
+* **Modularización**: La funcionalidad de la aplicación se ha dividido en módulos para mejorar la organización y la mantenibilidad del código.
+* **Manejo de Estado**: Se utiliza un enfoque de servicios observables para el manejo del estado global de la aplicación, siguiendo buenas prácticas y promoviendo un flujo de datos reactivo.
+* **Estilos**: La aplicación utiliza Tailwind CSS para aplicar estilos, garantizando un diseño responsive y una personalización eficiente de la interfaz de usuario.
+* **Optimización de Rendimiento**: Se implementaron técnicas de optimización como `trackBy` en listas para mejorar el rendimiento de renderizado.
+* **Notificaciones**: Se muestran notificaciones al usuario para informar sobre el éxito o fracaso de las acciones realizadas (ej., "Tarea creada con éxito"). Para ello, se ha integrado una librería de tostadas ligera y personalizable.
+* **Dashboard**: Se ha incluido un dashboard que muestra métricas básicas de las tareas (total, completadas, pendientes, etc.).
+* **Lazy Loading (Carga Perezosa)**: Los módulos secundarios se cargan de forma perezosa para optimizar el tiempo de carga inicial de la aplicación.
 
-```bash
-ng serve
-```
+## Cómo Ejecutar el Proyecto 
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+### Prerrequisitos
 
-## Code scaffolding
+* Node.js (versión 20 o superior, compatible con Angular 20)
+* npm (generalmente viene con Node.js) o Yarn
+* Angular CLI (instalación global: `npm install -g @angular/cli`)
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+### Pasos de Ejecución
 
-```bash
-ng generate component component-name
-```
+1.  **Clonar el Repositorio**:
+    ```bash
+    git clone https://github.com/Ysaragon95/todo-app.git
+    cd todo-app
+    ```
+2.  **Instalar Dependencias**:
+    ```bash
+    npm install
+    # o
+    yarn install
+    ```
+3.  **Configurar la API Backend**:
+    Asegúrate de que el backend .NET esté corriendo y disponible. La URL base de la API se puede configurar en el archivo `environment.ts` o `environment.prod.ts` (ajusta según tu configuración).
+4.  **Iniciar la Aplicación Angular**:
+    ```bash
+    ng serve
+    ```
+    La aplicación se iniciará y estará disponible en `http://localhost:4200/`. Se recargará automáticamente si cambias alguno de los archivos fuente.
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## Cómo Ejecutar las Pruebas 
 
-```bash
-ng generate --help
-```
+Se han implementado pruebas unitarias (usando Karma y Jasmine) para al menos un componente y un servicio.
 
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+1.  **Ejecutar Pruebas Unitarias**:
+    ```bash
+    ng test
+    ```
+    Esto abrirá un navegador y ejecutará las pruebas. Los resultados se mostrarán tanto en el navegador como en la terminal.
